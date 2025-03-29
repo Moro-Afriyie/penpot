@@ -116,6 +116,7 @@ services:
   # https://github.com/rroemhild/docker-test-openldap
   ldap:
     image: rroemhild/test-openldap:2.1
+    platform: linux/amd64
     expose:
       - '10389'
       - '10636'

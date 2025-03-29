@@ -90,6 +90,19 @@ function run-devenv-tmux {
     if [[ ! $(docker ps -f "name=penpot-devenv-main" -q) ]]; then
         start-devenv
     fi
+    
+docker exec -it penpot-devenv-main bash -c '
+    sudo apt remove --purge -y openjdk* &&
+    sudo apt autoremove -y &&
+    sudo rm -rf /usr/lib/jvm/* /usr/bin/java /etc/alternatives/java &&
+    sudo apt update && sudo apt upgrade -y &&
+    echo "deb http://deb.debian.org/debian sid main" | sudo tee -a /etc/apt/sources.list.d/sid.list &&
+    sudo apt update &&
+    sudo apt install -t sid openjdk-21-jdk -y &&
+    java -version
+'
+
+
 
     docker exec -ti penpot-devenv-main sudo -EH -u penpot PENPOT_PLUGIN_DEV=$PENPOT_PLUGIN_DEV /home/start-tmux.sh
 }
