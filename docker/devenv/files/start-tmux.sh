@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 sudo chown penpot:users /home/penpot
+sudo apt update && sudo apt install lsof -y
 
 cd ~;
 
@@ -8,6 +9,8 @@ source ~/.bashrc
 
 echo "[start-tmux.sh] Installing node dependencies"
 pushd ~/penpot/frontend/
+sudo rm -rf .shadow-cljs
+sudo rm -rf out resources/public/js
 corepack up;
 yarn install;
 yarn run playwright install --with-deps chromium
